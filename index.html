@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>麒麟城堡大事记 | 2015-2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gold: #C9A962;
+            --deep-gold: #8B7355;
+            --dark-bg: #1a1a2e;
+            --darker-bg: #0f0f1a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --text-primary: #f5f5f5;
+            --text-secondary: #a0a0a0;
+            --accent-red: #8B4513;
+            --gradient-gold: linear-gradient(135deg, #C9A962 0%, #8B7355 50%, #C9A962 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--darker-bg);
+            color: var(--text-primary);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* 开场动画 */
+        .intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darker-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1.5s ease, visibility 1.5s ease;
+        }
+
+        .intro-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .intro-symbol {
+            font-size: 8rem;
+            color: var(--primary-gold);
+            animation: breathe 3s ease-in-out infinite;
+            text-shadow: 0 0 60px rgba(201, 169, 98, 0.5);
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        .intro-text {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2rem;
+            color: var(--primary-gold);
+            margin-top: 2rem;
+            letter-spacing: 0.5em;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.5s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+
+        /* 背景装饰 */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(201, 169, 98, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(201, 169, 98, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(139, 69, 19, 0.02) 0%, transparent 30%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* 导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: linear-gradient(to bottom, rgba(15, 15, 26, 0.95), transparent);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-logo {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.2em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--primary-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-gold);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* 主标题区 */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(201, 169, 98, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border: 1px solid var(--primary-gold);
+            color: var(--primary-gold);
+            font-size: 0.8rem;
+            letter-spacing: 0.3em;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.2s forwards;
+        }
+
+        .hero h1 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.4s forwards;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.5em;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.6s forwards;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 4rem;
+            margin-top: 3rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.8s forwards;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-gold);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.2em;
+            margin-top: 0.5rem;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 1s forwards;
+        }
+
+        .scroll-indicator span {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.2em;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--primary-gold), transparent);
+            animation: scrollLine 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollLine {
+            0%, 100% { transform: scaleY(1); opacity: 1; }
+            50% { transform: scaleY(0.5); opacity: 0.5; }
+        }
+
+        /* 前言部分 */
+        .preface {
+            padding: 8rem 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2rem;
+            color: var(--primary-gold);
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .section-title::before,
+        .section-title::after {
+            content: '◆';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--deep-gold);
+            font-size: 0.5rem;
+        }
+
+        .section-title::before {
+            left: 30%;
+        }
+
+        .section-title::after {
+            right: 30%;
+        }
+
+        .preface-content {
+            font-size: 1.1rem;
+            line-height: 2.2;
+            color: var(--text-secondary);
+            text-align: justify;
+        }
+
+        .preface-content p {
+            margin-bottom: 2rem;
+            text-indent: 2em;
+        }
+
+        .preface-highlight {
+            background: linear-gradient(180deg, transparent 60%, rgba(201, 169, 98, 0.2) 60%);
+            padding: 0 0.2rem;
+            color: var(--text-primary);
+        }
+
+        /* 时间轴 */
+        .timeline {
+            padding: 4rem 2rem 8rem;
+            position: relative;
+        }
+
+        .timeline-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                transparent 0%, 
+                var(--primary-gold) 5%, 
+                var(--primary-gold) 95%, 
+                transparent 100%);
+        }
+
+        .timeline-year {
+            position: relative;
+            margin-bottom: 6rem;
+        }
+
+        .year-marker {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 80px;
+            background: var(--darker-bg);
+            border: 2px solid var(--primary-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-gold);
+            z-index: 10;
+            box-shadow: 0 0 30px rgba(201, 169, 98, 0.2);
+        }
+
+        .year-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            padding-top: 6rem;
+        }
+
+        .year-content.single {
+            grid-template-columns: 1fr;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .event-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(201, 169, 98, 0.1);
+            border-radius: 8px;
+            padding: 2rem;
+            position: relative;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .event-card:hover {
+            border-color: rgba(201, 169, 98, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-gold);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .event-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .event-date {
+            font-size: 0.8rem;
+            color: var(--primary-gold);
+            letter-spacing: 0.2em;
+            margin-bottom: 1rem;
+        }
+
+        .event-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .event-location {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .event-location::before {
+            content: '📍';
+            font-size: 0.8rem;
+        }
+
+        .event-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .event-meta {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .event-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: rgba(201, 169, 98, 0.1);
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--primary-gold);
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* 数据统计区 */
+        .stats-section {
+            padding: 8rem 2rem;
+            background: linear-gradient(to bottom, transparent, rgba(201, 169, 98, 0.03), transparent);
+        }
+
+        .stats-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--card-bg);
+            border: 1px solid rgba(201, 169, 98, 0.1);
+            border-radius: 8px;
+            transition: all 0.4s ease;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(201, 169, 98, 0.3);
+            transform: translateY(-10px);
+        }
+
+        .stat-card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        .stat-card-number {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.1em;
+        }
+
+        /* 页脚 */
+        footer {
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(201, 169, 98, 0.1);
+        }
+
+        .footer-logo {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.8rem;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .footer-slogan {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.3em;
+            margin-bottom: 2rem;
+        }
+
+        .footer-info {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+
+        /* 响应式 */
+        @media (max-width: 968px) {
+            .year-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .timeline-line {
+                left: 30px;
+            }
+
+            .year-marker {
+                left: 30px;
+                transform: translateX(-50%);
+                width: 60px;
+                height: 60px;
+                font-size: 1rem;
+            }
+
+            .year-content {
+                padding-left: 80px;
+                padding-top: 0;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .section-title::before,
+            .section-title::after {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* 滚动动画 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- 开场动画 -->
+    <div class="intro-overlay" id="intro">
+        <div class="intro-symbol">麟</div>
+        <div class="intro-text">麒麟城堡</div>
+    </div>
+
+    <!-- 背景装饰 -->
+    <div class="bg-pattern"></div>
+
+    <!-- 导航 -->
+    <nav>
+        <div class="nav-logo">麒麟城堡</div>
+        <div class="nav-links">
+            <a href="#preface">前言</a>
+            <a href="#timeline">历程</a>
+            <a href="#stats">数据</a>
+        </div>
+    </nav>
+
+    <!-- 主标题区 -->
+    <section class="hero">
+        <div class="hero-badge">2015 - 2025</div>
+        <h1>麒麟城堡大事记</h1>
+        <p class="hero-subtitle">用心陪伴 · 共同成长</p>
+        <div class="hero-stats">
+            <div class="stat-item">
+                <span class="stat-number">11</span>
+                <span class="stat-label">年历程</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">20</span>
+                <span class="stat-label">期活动</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">652</span>
+                <span class="stat-label">人次志愿者</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">3755</span>
+                <span class="stat-label">人次受益学生</span>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>向下滚动</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- 前言 -->
+    <section class="preface" id="preface">
+        <h2 class="section-title">前 言</h2>
+        <div class="preface-content">
+            <p>
+                何谓<span class="preface-highlight">"麒麟城堡"</span>？"麒麟"二字，意指中国古代五大瑞兽之一的"麒麟"，取义"麒麟踏祥云，人间百难消"；而"城堡"则代指孩子们心中的童话世界。可以说，"麒麟城堡"既寓意着一个能给家乡的孩子带去快乐和帮助的童话世界，也象征着麒麟城堡志愿者们<span class="preface-highlight">"用心陪伴，共同成长"</span>的团队理念。
+            </p>
+            <p>
+                2015年，10名毕业于云南省保山第一中学的2011级学生在共青团隆阳区委员会的指导下，正式创建了麒麟城堡志愿团队，在家乡保山开启了以大学生短期支教（乡村夏令营、冬令营）为核心项目的公益之旅。
+            </p>
+            <p>
+                回顾来路，麒麟城堡志愿团队从2015年创立至今的十一年，是麒麟城堡志愿团队从无到有、蓬勃发展的十一年，是披荆斩棘、乘风破浪的十一年。为了让新老志愿者以及所有关心支持团队发展的朋友们更好地了解团队的过去、把握团队的现在并谋划团队的未来，我们特成立编写小组，本着客观、负责、求真和务实的态度，汇集并整理团队资料，回顾历史、系统总结。
+            </p>
+        </div>
+    </section>
+
+    <!-- 时间轴 -->
+    <section class="timeline" id="timeline">
+        <div class="timeline-container">
+            <h2 class="section-title">发展历程</h2>
+            <div class="timeline-line"></div>
+
+            <!-- 2015年 -->
+            <div class="timeline-year">
+                <div class="year-marker">2015</div>
+                <div class="year-content single">
+                    <div class="event-card fade-in">
+                        <div class="event-date">2015.02.03 - 02.13</div>
+                        <h3 class="event-title">第一期活动："寒假，我们走进家乡的大山"</h3>
+                        <div class="event-location">保山市隆阳区丙麻乡河西村河西小学</div>
+                        <p class="event-desc">
+                            麒麟城堡志愿团队从理论到实践的第一次尝试。10名创始人带领团队，为40余名小学生带去知识与陪伴，为后期实地活动开展奠定了基础、积累了经验。
+                        </p>
+                        <div class="event-meta">
+                            <span class="event-tag">创始团队</span>
+                            <span class="event-tag">10人</span>
+                            <span class="event-tag">40+学生</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2016年 -->
+            <div class="timeline-year">
+                <div class="year-marker">2016</div>
+                <div class="year-content">
+                    <div class="event-card fade-in">
+                        <div class="event-date">2016.01.28 - 02.06</div>
+                        <h3 class="event-title">第二期活动</h3>
+                        <div class="event-location">河西小学、阿贡田小学</div>
+                        <p class="event-desc">
+                            创新增加了行前培训、课程试讲和动员大会环节，使得活动更加规范完善。服务200余名中小学生。
+                        </p>
+                        <div class="event-meta">
+                            <span class="event-tag">28名志愿者</span>
+                            <span class="event-tag">规范化</span>
+                        </div>
+                    </div>
+                    <div class="event-card fade-in">
+                        <div class="event-date">2016.07.22</div>
+                        <h3 class="event-title">首部微纪录片诞生</h3>
+                        <div class="event-location">腾讯视频</div>
+                        <p class="event-desc">
+                            《从"支教"到"陪伴"麒麟城堡志愿团队在行动》发布，时长9分33秒。第一次尝试用镜头语言来介绍团队及其活动。
+                        </p>
+                        <div class="event-meta">
+                            <span class="event-tag">品牌传播</span>
+                            <span class="event-tag">纪录片</span>
+                        </div>
+                    </div>
+                    <div class="event-card fade-in">
+                        <div class="event-date">2016.07.29 - 08.12</div>
+                        <h3 class="event-title">第三期活动</h3>
+                        <div class="event-location">横山村小学、阿贡田村小学</div>
+                        <p class="event-desc">
+                            正式将公益活动主题更名为"麒麟城堡"暑假支教夏令营，品牌逐渐成型。
+                        </p>
+                        <div class="event-meta">
+                            <span class="event-tag">23名志愿者</span>
+                            <span class="event-tag">品牌确立</span>
+                        </div>
+                    </div>
+                    <div class="event-card fade-in">
+                        <div class="event-date">2016.09.25</div>
+                        <h3 class="event-title">第一次团队换届</h3>
+                        <div class="event-location">共青团隆阳区委指导</div>
+                        <p class="event-desc">
+                            张晓春任队长，苏仁栋、杨迪帆任副队长。明确团队理念、完善组织架构，为团队的传承与发展打下坚实基础。
+                        </p>
+                        <div class="event-meta">
+                            <span class="event-tag">传承</span>
+                            <span class="event-tag">组织架构</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2017年 -->
+            <div class="timeline-year">
+                <div class="year-marker">2017</div>
+                <div class="year-content">
+                    <div class="event-card fade-in">
+                        <div class="event-date">2017.02</div>
+                        <h3 class="event-title">第四期活动</h3>
+                        <div class="event-location">阿贡田村小学、横山小学、小田坝小学</div>
+                        <p class="event-desc">
+                            首次在三所学校同时开展活动，35名志愿者参与，服务范围进一步扩大。
+                        </p>
+                        <div class="event-meta">
+                            <span class="event-tag">35人</span>
+                            <span class="event-tag">3校联动</span>
+                        </div>
+                    </div>
+                    <div class="event-card fade-in">
+                        <div class="event-date">2017.03.17</div>
+                        <h3 class="event-title">国家级课题调研</h3>
+                        <div class="event-location">中国青年政治学院</div>
+                        <p class="event-desc">
+                            《大学生短期支教长效机制探索》获批国家级大学生创新创业训练项目，第一次以麒麟城堡为例进行学术研究。
+                        </p>
+                        <div class="event-meta">
+                            <span class="event-tag">学术研究</span>
+                            <span class="event-tag">国家级</span>
+                        </div>
+                    </div>
+                    <div class="event-card fade-in">
+                        <div class="event-date">2017.08</div>
+                        <h3 class="event-title">创建"麒麟FM"</h3>
+                        <div class="event-location">芒宽乡白花林小学</div>
+                        <p class="event-desc">
+                            首次开设"麒麟FM"校园广播站，创新拓展新媒体形式，增强与孩子的良性互动。
+                        </p>
+                        <div class="event-meta">
+                            <span class="event-tag">新媒体</span>
+                            <span class="event-tag">广播站</span>
+                        </div>
+                    </div>
+                    <div class="event-card fade-in">
+                        <div class="event-date">2017.11.04</div>
+                        <h3 class="event-title">省级座谈会发言</h3>
+                        <div class="event-location">全省社会组织新兴领域青年代表座谈会</div>
+                        <p class="event-desc">
+                            李苑翠受邀参加省级座谈会，围绕学习十九大精神进行交流发言。团队第一次在省级会议上代表发言。
+                        </p>
+                        <div class="event-meta">
+                            <span class="event-tag">省级荣誉</span>
+                            <span class="event-tag">十九大</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2018年 -->
+            <div class="timeline-year">
+                <div class="year-marker">2018</div>
+                <div class="year-content">
+                    <div class="event-card fade-in">
+                        <div class="event-date">2018.02</div>
+                        <h3 class="event-title">三周年庆祝活动</h3>
+                        <div class="event-location">保山市第一中学报告厅</div>
+                        <p class="event-desc">
+                            "心中有爱，远方有梦"三周年庆暨工作总结会议。已举办六期活动，共招募志愿者185人次，服务936名学生。
+                        </p>
+                        <div class="event-meta">
+                            <span class="event-tag">3周年</span>
+                            <span class="event-tag">里程碑</span>
+                        </div>
+                    </div>
+                    <div class="event-card fade-in">
+                        <div class="event-date">2018.08</div>
+                        <h3 class="event-title">"麒麟书堡"捐赠</h3>
+                        <div class="event-location">水寨乡摆菜小学</div>
+                        <p class="event-desc">
+                            第一次承接捐赠图书的公益项目，捐赠图书142本，受益学生77人。
+                        </p>
+                        <div class="event-meta">
+                            <span class="event-tag">图书捐赠</span>
+                            <span class="event-tag">142本</span>
+                        </div>
+                    </div>
+                    <div class="event-card fade-in">
+                        <div class="event-date">2018.09</div>
+                        <h3 class="event-title">首次参与腾讯"99公益日"</h3>
+                        <div class="event-location">腾讯公益平台</div>
+                        <p class="event-desc">
+                            为芒合小学募捐6151.1元，建成3个班级图书角。第一次借助外部平台拓展资源。
+                        </p>
+                        <div class="event-meta">
+                            <span class="event-tag">互联网公益</span>
+                            <span class="event-tag">6151元</span>
+                        </div>
+                    </div>
+                    <div class="event-card fade-in">
+                        <div class="event-date">2018全年</div>
+                        <h3 class="event-title">暖冬行动</h3>
+                        <div class="event-location">保山客运站</div>
+                        <p class="event-desc">
+                            第一次走出山区校园，在保山客运站开展春运志愿服务，为乘客提供政策宣传、乘候服务、引导指路等。
+                        </p>
+                        <div class="event-meta">
+                            <span class="event-tag">春运</span>
+                            <span class="event-tag">志愿服务</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2019年 -->
+            <div class="timeline-year">
+                <div class="year-marker">2019</div>
+                <div class="year-content">
+                    <div class="event-card fade-in">
+                        <div class="event-date">2019全年</div>
+                        <h3 class="event-title">第八、九期活动</h3>
+                        <div class="event-location">芒合小学、摆菜小学、小麦地小学</div>
+                        <p class="event-desc">
+                            持续深化乡村夏令营活动，主题分别为"用心呵护绿色，用爱浇灌家园"和"扫去伪善的微尘，让真诚开花结果"。
+                        </p>
+                        <div class="event-meta">
+                            <span class="event-tag">环保主题</span>
+                            <span class="event-tag">真诚教育</span>
+                        </div>
+                    </div>
+                    <div class="event-card fade-in">
+                        <div class="event-date">2019.09</div>
+                        <h3 class="event-title">腾讯99公益日（第二期）</h3>
+                        <div class="event-location">腾讯公益平台</div>
+                        <p class="event-desc">
+                            为【给乡村孩子的幸福课】成功捐助4148.36元，为乡村孩子送去了460天幸福课。
+                        </p>
+                        <div class="event-meta">
+                            <span class="event-tag">幸福课</span>
+                            <span class="event-tag">460天</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2020-2021年 -->
+            <div class="timeline-year">
+                <div class="year-marker">2020<br>2021</div>
+                <div class="year-content">
+                    <div class="event-card fade-in">
+                        <div class="event-date">2020-2021</div>
+                        <h3 class="event-title">疫情下的坚守</h3>
+                        <div class="event-location">线上+线下</div>
+                        <p class="event-desc">
+                            第十至十三期活动因疫情取消。团队转型开展"七彩假期"绘本阅读、青年读书班、星火沙龙等线上活动，保持团队活力。
+                        </p>
+                        <div class="event-meta">
+                            <span class="event-tag">疫情应对</span>
+                            <span class="event-tag">线上转型</span>
+                        </div>
+                    </div>
+                    <div class="event-card fade-in">
+                        <div class="event-date">2021.08</div>
+                        <h3 class="event-title">第四次团队换届</h3>
+                        <div class="event-location">线上会议</div>
+                        <p class="event-desc">
+                            杨晓加接任队长，何爱琪、张润任副队长。在困难时期完成团队传承，服务时间为三年。
+                        </p>
+                        <div class="event-meta">
+                            <span class="event-tag">传承</span>
+                            <span class="event-tag">特殊时期</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2022年 -->
+            <div class="timeline-year">
+                <div class="year-marker">2022</div>
+                <div class="year-content">
+                    <div class="event-card fade-in">
+                        <div class="event-date">2022.07</div>
+                        <h3 class="event-title">第十四期活动：冲破疫情阴霾</h3>
+                        <div class="event-location">西邑乡永信社区、瓦渡乡文化站</div>
+                        <p class="event-desc">
+                            自2020年以来第一次成功开展实地活动，实现了团队的"第二次创业"。服务留守儿童104名。
+                        </p>
+                        <div class="event-meta">
+                            <span class="event-tag">重启</span>
+                            <span class="event-tag">第二次创业</span>
+                        </div>
+                    </div>
+                    <div class="event-card fade-in">
+                        <div class="event-date">2022.08</div>
+                        <h3 class="event-title">第五次团队换届</h3>
+                        <div class="event-location">共青团隆阳区委</div>
+                        <p class="event-desc">
+                            张小昆任队长，首次采取选聘已就业老队员担任队长模式，探索"内外双驱动，动静结合"的新发展模式。
+                        </p>
+                        <div class="event-meta">
+                            <span class="event-tag">创新模式</span>
+                            <span class="event-tag">可持续发展</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2023年 -->
+            <div class="timeline-year">
+                <div class="year-marker">2023</div>
+                <div class="year-content">
+                    <div class="event-card fade-in">
+                        <div class="event-date">2023.02</div>
+                        <h3 class="event-title">第十五期活动：惊险的跳跃</h3>
+                        <div class="event-location">青华街道红花社区、廖官社区</div>
+                        <p class="event-desc">
+                            疫情后期活动恢复的关键节点。首次探索城市社区活动模式，为棚户区改造新建社区的留守儿童提供服务。
+                        </p>
+                        <div class="event-meta">
+                            <span class="event-tag">社区探索</span>
+                            <span class="event-tag">70名儿童</span>
+                        </div>
+                    </div>
+                    <div class="event-card fade-in">
+                        <div class="event-date">2023.08</div>
+                        <h3 class="event-title">第十六期活动</h3>
+                        <div class="event-location">瓦渡乡、西邑乡、青华街道</div>
+                        <p class="event-desc">
+                            3支队伍35名志愿者，服务379名学生。团队筹备流程进一步完善，为后续活动开展奠定持续发展的基础。
+                        </p>
+                        <div class="event-meta">
+                            <span class="event-tag">3支队伍</span>
+                            <span class="event-tag">379人</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2024年 -->
+            <div class="timeline-year">
+                <div class="year-marker">2024</div>
+                <div class="year-content">
+                    <div class="event-card fade-in">
+                        <div class="event-date">2024全年</div>
+                        <h3 class="event-title">第十七、十八期活动</h3>
+                        <div class="event-location">西邑乡、辛街乡、青华街道</div>
+                        <p class="event-desc">
+                            持续扩大服务范围，两期活动共服务502名学生。团队运作更加成熟，志愿者队伍不断壮大。
+                        </p>
+                        <div class="event-meta">
+                            <span class="event-tag">规模化</span>
+                            <span class="event-tag">502人</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2025年 -->
+            <div class="timeline-year">
+                <div class="year-marker">2025</div>
+                <div class="year-content">
+                    <div class="event-card fade-in">
+                        <div class="event-date">2025.01</div>
+                        <h3 class="event-title">第十九期活动</h3>
+                        <div class="event-location">西邑乡、辛街乡、青华街道</div>
+                        <p class="event-desc">
+                            4支队伍48名志愿者，服务366名学生。团队组织架构进一步完善，设立多个副队长分管不同部门。
+                        </p>
+                        <div class="event-meta">
+                            <span class="event-tag">4支队伍</span>
+                            <span class="event-tag">48人</span>
+                        </div>
+                    </div>
+                    <div class="event-card fade-in">
+                        <div class="event-date">2025.07</div>
+                        <h3 class="event-title">第二十期活动</h3>
+                        <div class="event-location">西邑乡、辛街乡、瓦渡乡、青华街道</div>
+                        <p class="event-desc">
+                            5支队伍59名志愿者，服务555名学生，创团队历史新高。十一年坚守，初心不改。
+                        </p>
+                        <div class="event-meta">
+                            <span class="event-tag">历史新高</span>
+                            <span class="event-tag">555人</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 数据统计 -->
+    <section class="stats-section" id="stats">
+        <h2 class="section-title">成就数据</h2>
+        <div class="stats-grid">
+            <div class="stat-card fade-in">
+                <div class="stat-card-icon">🏰</div>
+                <div class="stat-card-number">11</div>
+                <div class="stat-card-label">年坚守</div>
+            </div>
+            <div class="stat-card fade-in">
+                <div class="stat-card-icon">🎪</div>
+                <div class="stat-card-number">20</div>
+                <div class="stat-card-label">期活动</div>
+            </div>
+            <div class="stat-card fade-in">
+                <div class="stat-card-icon">👥</div>
+                <div class="stat-card-number">652</div>
+                <div class="stat-card-label">人次志愿者</div>
+            </div>
+            <div class="stat-card fade-in">
+                <div class="stat-card-icon">📚</div>
+                <div class="stat-card-number">60</div>
+                <div class="stat-card-label">支志愿者队伍</div>
+            </div>
+            <div class="stat-card fade-in">
+                <div class="stat-card-icon">🎓</div>
+                <div class="stat-card-number">3755</div>
+                <div class="stat-card-label">人次受益学生</div>
+            </div>
+            <div class="stat-card fade-in">
+                <div class="stat-card-icon">🏫</div>
+                <div class="stat-card-number">16</div>
+                <div class="stat-card-label">所乡村小学</div>
+            </div>
+            <div class="stat-card fade-in">
+                <div class="stat-card-icon">🏘️</div>
+                <div class="stat-card-number">8</div>
+                <div class="stat-card-label">个社区</div>
+            </div>
+            <div class="stat-card fade-in">
+                <div class="stat-card-icon">🗺️</div>
+                <div class="stat-card-number">8</div>
+                <div class="stat-card-label">个乡镇</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-logo">麒麟城堡</div>
+        <p class="footer-slogan">用心陪伴 · 共同成长</p>
+        <p class="footer-info">
+            2015-2025 麒麟城堡志愿团队 | 大事记（第二次更新发布）<br>
+            编写组：张小昆 | 校对组：苏麒
+        </p>
+    </footer>
+
+    <script>
+        // 开场动画
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('intro').classList.add('hidden');
+            }, 2500);
+        });
+
+        // 滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 导航栏滚动效果
+        let lastScroll = 0;
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                nav.style.background = 'rgba(15, 15, 26, 0.95)';
+            } else {
+                nav.style.background = 'linear-gradient(to bottom, rgba(15, 15, 26, 0.95), transparent)';
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // 数字动画
+        function animateNumber(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            
+            function updateNumber() {
+                start += increment;
+                if (start < target) {
+                    element.textContent = Math.floor(start);
+                    requestAnimationFrame(updateNumber);
+                } else {
+                    element.textContent = target;
+                }
+            }
+            
+            updateNumber();
+        }
+
+        // 当统计区域进入视口时触发数字动画
+        const statsObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statNumbers = entry.target.querySelectorAll('.stat-card-number');
+                    statNumbers.forEach(stat => {
+                        const target = parseInt(stat.textContent);
+                        animateNumber(stat, target);
+                    });
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        const statsSection = document.querySelector('.stats-section');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+    </script>
+</body>
+</html>
