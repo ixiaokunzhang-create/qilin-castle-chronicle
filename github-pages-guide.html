@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Pages 永久部署指南 | 小白入门教程</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF6B35;
+            --primary-light: #FF8C61;
+            --secondary: #4ECDC4;
+            --accent: #FFB347;
+            --bg-warm: #FFF9F0;
+            --bg-white: #FFFFFF;
+            --text-dark: #3D2C2E;
+            --text-gray: #666;
+            --text-light: #999;
+            --shadow: 0 4px 20px rgba(255, 107, 53, 0.15);
+            --shadow-hover: 0 8px 30px rgba(255, 107, 53, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--bg-warm);
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+
+        /* 导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 0.1em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero区 */
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            background: linear-gradient(135deg, #FFF9F0 0%, #FFE8D6 50%, #FFF5F0 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            right: 5%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 10%;
+            left: 5%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(78, 205, 196, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255, 107, 53, 0.1);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            border-radius: 50px;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* 内容区 */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 5rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-emoji {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .section h2 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-desc {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+        }
+
+        /* 卡片 */
+        .card {
+            background: var(--bg-white);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card h3 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card p, .card li {
+            color: var(--text-gray);
+            line-height: 1.9;
+        }
+
+        .card ul, .card ol {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .card li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* 步骤卡片 */
+        .step-card {
+            background: linear-gradient(135deg, #fff 0%, #FFF9F0 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid rgba(255, 107, 53, 0.1);
+            position: relative;
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 2rem;
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .step-card h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        /* 表格 */
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .info-table th {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .info-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .info-table tr:hover {
+            background: #FFF9F0;
+        }
+
+        /* 提示框 */
+        .tip-box {
+            background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+            border-left: 4px solid var(--secondary);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 1.5rem 0;
+        }
+
+        .tip-box strong {
+            color: var(--secondary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* 代码块 */
+        code {
+            background: #f5f5f5;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: var(--primary);
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* 链接 */
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* 页脚 */
+        footer {
+            background: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        footer p {
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 6rem 1.5rem 3rem;
+            }
+
+            .container {
+                padding: 2rem 1.5rem;
+            }
+
+            .card, .step-card {
+                padding: 1.5rem;
+            }
+
+            .info-table {
+                font-size: 0.9rem;
+            }
+
+            .info-table th, .info-table td {
+                padding: 0.75rem;
+            }
+        }
+
+        /* 平滑滚动 */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* 锚点偏移 */
+        section[id] {
+            scroll-margin-top: 80px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航 -->
+    <nav>
+        <div class="nav-logo">📚 GitHub Pages 指南</div>
+        <div class="nav-links">
+            <a href="#what">什么是GitHub</a>
+            <a href="#why">为什么选择</a>
+            <a href="#steps">部署步骤</a>
+            <a href="#faq">常见问题</a>
+        </div>
+    </nav>
+
+    <!-- Hero区 -->
+    <section class="hero">
+        <div class="hero-badge">小白入门教程</div>
+        <h1>GitHub Pages 永久部署指南</h1>
+        <p class="hero-subtitle">从零开始，手把手教你将网页免费部署到互联网，让全世界都能访问你的作品</p>
+    </section>
+
+    <!-- 内容区 -->
+    <div class="container">
+        
+        <!-- 什么是 GitHub -->
+        <section class="section" id="what">
+            <div class="section-header">
+                <div class="section-emoji">🐙</div>
+                <h2>什么是 GitHub？</h2>
+                <p class="section-desc">一句话解释 + 通俗比喻</p>
+            </div>
+
+            <div class="card">
+                <h3>📌 一句话解释</h3>
+                <p><strong>GitHub 是全球最大的代码托管平台</strong>，就像一个"程序员的网盘" + "社交平台"的结合体。</p>
+            </div>
+
+            <div class="card">
+                <h3>🏠 通俗比喻</h3>
+                <table class="info-table">
+                    <tr>
+                        <th>概念</th>
+                        <th>类比</th>
+                    </tr>
+                    <tr>
+                        <td>GitHub</td>
+                        <td>程序员的"百度网盘" + "朋友圈"</td>
+                    </tr>
+                    <tr>
+                        <td>仓库 (Repository)</td>
+                        <td>一个项目文件夹</td>
+                    </tr>
+                    <tr>
+                        <td>代码提交 (Commit)</td>
+                        <td>保存文件的历史版本</td>
+                    </tr>
+                    <tr>
+                        <td>分支 (Branch)</td>
+                        <td>项目的不同版本线</td>
+                    </tr>
+                    <tr>
+                        <td>Fork</td>
+                        <td>复制别人的项目到自己账号</td>
+                    </tr>
+                    <tr>
+                        <td>Pull Request</td>
+                        <td>向原作者提交修改建议</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <h3>⚡ 核心功能</h3>
+                <ul>
+                    <li><strong>代码托管</strong> - 存储代码文件，记录每次修改历史，随时回滚到任意版本</li>
+                    <li><strong>协作开发</strong> - 多人同时编辑一个项目，查看谁改了什么，讨论和审查代码</li>
+                    <li><strong>开源社区</strong> - 全球开发者分享代码，免费学习优秀项目，参与知名开源软件</li>
+                    <li><strong>GitHub Pages</strong> - <span style="color: var(--primary); font-weight: 600;">免费静态网站托管</span>，将 HTML/CSS/JS 文件变成可访问的网站，支持自定义域名</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 为什么选择 GitHub Pages -->
+        <section class="section" id="why">
+            <div class="section-header">
+                <div class="section-emoji">🎯</div>
+                <h2>为什么选择 GitHub Pages？</h2>
+                <p class="section-desc">五大优势，让你无法拒绝</p>
+            </div>
+
+            <table class="info-table">
+                <tr>
+                    <th>优势</th>
+                    <th>说明</th>
+                </tr>
+                <tr>
+                    <td>🆓 完全免费</td>
+                    <td>无流量限制，无广告，终身使用</td>
+                </tr>
+                <tr>
+                    <td>🌍 全球访问</td>
+                    <td>自带 CDN，国内国外都能快速打开</td>
+                </tr>
+                <tr>
+                    <td>🔗 永久链接</td>
+                    <td>https://用户名.github.io/仓库名/</td>
+                </tr>
+                <tr>
+                    <td>⚡ 自动部署</td>
+                    <td>上传文件后自动发布，无需手动配置服务器</td>
+                </tr>
+                <tr>
+                    <td>🛡️ 稳定可靠</td>
+                    <td>微软旗下，服务稳定，HTTPS 自动配置</td>
+                </tr>
+            </table>
+
+            <div class="tip-box">
+                <strong>💡 知名项目都在用</strong>
+                Linux 操作系统源码、Python/Node.js 编程语言、Vue/React 前端框架、TensorFlow 人工智能项目……<br>
+                简单来说：<strong>GitHub 是程序员的必备工具，而 GitHub Pages 让我们可以免费拥有永久网站。</strong>
+            </div>
+        </section>
+
+        <!-- 部署步骤 -->
+        <section class="section" id="steps">
+            <div class="section-header">
+                <div class="section-emoji">🚀</div>
+                <h2>GitHub Pages 部署步骤</h2>
+                <p class="section-desc">手把手教你，5分钟搞定</p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h4>注册 GitHub 账号</h4>
+                <ul>
+                    <li>访问 <a href="https://github.com/signup" target="_blank">https://github.com/signup</a></li>
+                    <li>使用邮箱注册（支持国内邮箱：QQ邮箱、163邮箱等）</li>
+                    <li>设置用户名和密码</li>
+                    <li>完成邮箱验证</li>
+                </ul>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h4>创建仓库</h4>
+                <ul>
+                    <li>登录后点击右上角 <strong>+</strong> → <strong>New repository</strong></li>
+                    <li>仓库名称填写：<code>qilin-castle-chronicle</code>（或你想要的名称）</li>
+                    <li>选择 <strong>Public</strong>（公开）</li>
+                    <li>勾选 <strong>Add a README file</strong></li>
+                    <li>点击 <strong>Create repository</strong></li>
+                </ul>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h4>上传 HTML 文件</h4>
+                <ul>
+                    <li>进入仓库页面，点击 <strong>Add file</strong> → <strong>Upload files</strong></li>
+                    <li>将你的 <code>index.html</code> 文件拖拽上传</li>
+                    <li>点击 <strong>Commit changes</strong></li>
+                </ul>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <h4>启用 GitHub Pages</h4>
+                <ul>
+                    <li>点击仓库顶部 <strong>Settings</strong> 标签</li>
+                    <li>左侧菜单选择 <strong>Pages</strong></li>
+                    <li><strong>Source</strong> 选择 <strong>Deploy from a branch</strong></li>
+                    <li><strong>Branch</strong> 选择 <strong>main</strong> / <strong>/(root)</strong></li>
+                    <li>点击 <strong>Save</strong></li>
+                </ul>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">5</div>
+                <h4>获取你的永久链接</h4>
+                <ul>
+                    <li>等待 1-2 分钟</li>
+                    <li>访问 <code>https://你的用户名.github.io/仓库名/</code></li>
+                    <li>🎉 完成！你的网站已经上线！</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 获取 Token 步骤 -->
+        <section class="section" id="token">
+            <div class="section-header">
+                <div class="section-emoji">🔑</div>
+                <h2>获取 Personal Access Token</h2>
+                <p class="section-desc">让自动化部署成为可能</p>
+            </div>
+
+            <div class="card">
+                <h3>🤔 什么是 Token？</h3>
+                <p>Token 相当于一把"钥匙"，让别人（或自动化工具）可以代替你操作 GitHub 仓库。比如让别人帮你上传文件、部署网站。</p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h4>进入 Token 设置页面</h4>
+                <p>登录 GitHub → 点击右上角头像 → <strong>Settings</strong> → 左侧最下方 <strong>Developer settings</strong> → <strong>Personal access tokens</strong> → <strong>Tokens (classic)</strong></p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h4>生成新 Token</h4>
+                <ul>
+                    <li>点击 <strong>Generate new token (classic)</strong></li>
+                    <li>填写 <strong>Note</strong>（备注，如："部署网站"）</li>
+                    <li><strong>Expiration</strong> 选择过期时间（建议选 <strong>No expiration</strong> 永久，或自定义时间）</li>
+                    <li>勾选权限：<strong>repo</strong>（完整控制仓库）</li>
+                    <li>点击页面底部 <strong>Generate token</strong></li>
+                </ul>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h4>保存 Token</h4>
+                <ul>
+                    <li><strong>立即复制生成的 token</strong>（只显示一次！）</li>
+                    <li>格式类似：<code>ghp_xxxxxxxxxxxxxxxxxxxx</code></li>
+                    <li>保存到安全的地方，不要泄露给他人</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ 安全提醒</strong>
+                Token 相当于你的账号密码，谁拿到都能操作你的仓库！<br>
+                使用完毕后，建议立即到 <a href="https://github.com/settings/tokens" target="_blank">https://github.com/settings/tokens</a> 删除。
+            </div>
+        </section>
+
+        <!-- 常见问题 -->
+        <section class="section" id="faq">
+            <div class="section-header">
+                <div class="section-emoji">🤔</div>
+                <h2>GitHub 问题大全</h2>
+                <p class="section-desc">小白最常问的问题，都在这里</p>
+            </div>
+
+            <div class="card">
+                <h3>💰 GitHub 需要花钱吗？</h3>
+                <table class="info-table">
+                    <tr>
+                        <th>功能</th>
+                        <th>价格</th>
+                        <th>说明</th>
+                    </tr>
+                    <tr>
+                        <td>基本功能</td>
+                        <td>🆓 完全免费</td>
+                        <td>托管代码、创建仓库、GitHub Pages</td>
+                    </tr>
+                    <tr>
+                        <td>GitHub Pages</td>
+                        <td>🆓 完全免费</td>
+                        <td>无限流量，我们用的就是它</td>
+                    </tr>
+                    <tr>
+                        <td>私人仓库</td>
+                        <td>🆓 每月 500MB</td>
+                        <td>公开仓库无限</td>
+                    </tr>
+                    <tr>
+                        <td>付费功能</td>
+                        <td>💰 可选</td>
+                        <td>普通用户完全不需要</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 1rem;"><strong>结论：咱们用的功能全部免费，不需要花一分钱！</strong></p>
+            </div>
+
+            <div class="card">
+                <h3>💾 GitHub 能用多大空间？</h3>
+                <table class="info-table">
+                    <tr>
+                        <th>类型</th>
+                        <th>容量</th>
+                        <th>说明</th>
+                    </tr>
+                    <tr>
+                        <td>单个仓库</td>
+                        <td>推荐 ≤ 1GB</td>
+                        <td>软限制，超了会有警告</td>
+                    </tr>
+                    <tr>
+                        <td>单个文件</td>
+                        <td>≤ 100MB</td>
+                        <td>超大文件需要用 Git LFS</td>
+                    </tr>
+                    <tr>
+                        <td>GitHub Pages 网站</td>
+                        <td>🆓 1GB</td>
+                        <td>普通网页完全够用</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 1rem;"><strong>结论：做网页、存文档、存代码都绰绰有余！</strong></p>
+            </div>
+
+            <div class="card">
+                <h3>🔑 Token 以后还能用吗？</h3>
+                <p><strong>Token 删除后不影响已部署的网站！</strong>网站依然正常访问。</p>
+                <p style="margin-top: 1rem;">以后需要更新网页时，有两个选择：</p>
+                <ul>
+                    <li><strong>方案一：</strong>临时创建新 Token 给自动化工具，部署完成后立即删除（最安全）</li>
+                    <li><strong>方案二：</strong>自己登录 GitHub 手动上传文件（不需要 Token）</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>🌐 GitHub 是否需要外网？</h3>
+                <table class="info-table">
+                    <tr>
+                        <th>地区</th>
+                        <th>访问情况</th>
+                    </tr>
+                    <tr>
+                        <td>国外</td>
+                        <td>直接访问，速度快</td>
+                    </tr>
+                    <tr>
+                        <td>中国大陆</td>
+                        <td><strong>需要科学上网工具</strong>（VPN/代理）</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 1rem;">如果无法访问 GitHub，可以考虑国内替代方案：</p>
+                <ul>
+                    <li><strong>Gitee（码云）</strong> - <a href="https://gitee.com" target="_blank">gitee.com</a>，国内访问快，免费 Pages</li>
+                    <li><strong>Coding</strong> - <a href="https://coding.net" target="_blank">coding.net</a>，腾讯旗下，国内稳定</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>📊 GitHub 能申请多少 Token？</h3>
+                <table class="info-table">
+                    <tr>
+                        <th>类型</th>
+                        <th>数量限制</th>
+                    </tr>
+                    <tr>
+                        <td>Personal Access Token</td>
+                        <td>想申请多少申请多少</td>
+                    </tr>
+                    <tr>
+                        <td>每个 Token 的有效期</td>
+                        <td>你自己设置（1天 ~ 永久）</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 1rem;"><strong>其实你不需要反复申请 Token！</strong></p>
+                <ul>
+                    <li>一个 Token 可以管理所有仓库</li>
+                    <li>Token 删除后随时可以新建</li>
+                    <li>只需要在需要自动化部署时临时创建</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>⏰ GitHub 账号能用多久？</h3>
+                <p style="font-size: 1.2rem; color: var(--primary); font-weight: 600;">永久！</p>
+                <p>一次注册，终身使用，不需要续费，不需要定期登录验证。</p>
+            </div>
+        </section>
+
+        <!-- 总结 -->
+        <section class="section" id="summary">
+            <div class="section-header">
+                <div class="section-emoji">✨</div>
+                <h2>总结</h2>
+            </div>
+
+            <div class="tip-box">
+                <strong>🎯 核心要点回顾</strong>
+                <ul style="margin-top: 0.5rem;">
+                    <li>GitHub 是全球最大的代码托管平台，免费使用</li>
+                    <li>GitHub Pages 让我们可以免费拥有永久网站</li>
+                    <li>部署步骤：注册 → 创建仓库 → 上传文件 → 启用 Pages → 获取链接</li>
+                    <li>Token 是临时钥匙，用完即删，安全第一</li>
+                    <li>国内访问 GitHub 需要科学上网，或使用 Gitee/Coding 替代</li>
+                </ul>
+            </div>
+
+            <div class="card" style="text-align: center; border-left-color: var(--secondary);">
+                <h3 style="justify-content: center;">🚀 现在就开始吧！</h3>
+                <p style="font-size: 1.1rem; margin: 1rem 0;">访问 <a href="https://github.com/signup" target="_blank">https://github.com/signup</a></p>
+                <p>创建你的第一个网站，让全世界都能看到你的作品！</p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>GitHub Pages 永久部署指南</p>
+        <p>整理日期：2026年5月22日</p>
+        <p style="margin-top: 1rem; opacity: 0.6;">希望这份指南能帮助更多小白入门 🎉</p>
+    </footer>
+
+</body>
+</html>
